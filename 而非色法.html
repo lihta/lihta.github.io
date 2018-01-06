@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<img src="common/css/images/banner.jpg" alt="" id="img_" width="200px" height="200px">
+<div id="div1" style="width: 200px;height: 200px;border:1px solid #d3d;"></div>
+<canvas id="myCanvas" width="300" height="150" style="border:1px solid #d3d3d3;">
+    Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<script>
+    var c = document.getElementById("myCanvas");
+    var img_ = document.getElementById("img_");
+    var div1 = document.getElementById("div1");
+
+    img_.onload = function () {
+        div1.style.backgroundColor = getImageColor(img_.src);
+    };
+    getImageColor = function (imgSrc, pxNumber) {
+        var arrR = [], arrG = [], arrB = [], j = 0, R, G, B, rgb;
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        var img = new Image();
+        img.src = imgSrc;
+        ctx.drawImage(img, 0, 0);
+        var imageData = ctx.getImageData(0, 0, 100, 100).data;
+        console.log(imageData)
+        for (var i = 0; i < imageData.length; i += 128) {
+            arrR[j] = imageData[i];
+            arrG[j] = imageData[i + 1];
+            arrB[j] = imageData[i + 2];
+            j += 1;
+            if (j == pxNumber) {
+                break;
+            }
+        }
+        R = _getArryWeightValue(arrR);
+        G = _getArryWeightValue(arrG);
+        B = _getArryWeightValue(arrB);
+        rgb = 'rgb(' + R + ',' + G + ',' + B + ')';
+        return rgb;
+    };
+    _getArryWeightValue = function (arr) {
+        var result = {}, newArr = [], resultArr = [], k = 0;
+        for (var i = 0; i < arr.length; i++) {
+            if (!result[arr[i]]) {
+                result[arr[i]] = 1;
+            } else {
+                newArr.push(arr[i]);//newArr数组中为arr中出现重复的元素，即把arr数组中不重复的元素去除掉
+            }
+        }
+        for (var i = 0; i < newArr.length; i++) {
+            k = 0;
+            for (var j = 0; j < newArr.length; j++) {
+                if (newArr[i] === newArr[j]) {
+                    k += 1;
+                }
+                resultArr[i] = k;//把NewArr中每个值重复出现的次数依次放入resultArr中
+            }
+        }
+        var item = _getArryMaxItem(resultArr);//获取resultArr数组中出现重复值最多的那个值的索引值
+        return newArr[item];//返回权重最高的值
+    }
+
+    //    ctx.putImageData(imgData,10,70);
+    _getArryMaxItem = function (arr) {
+        var max = Math.max.apply(null, arr);
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] === max) {
+                return i;
+            }
+        }
+    }
+
+</script>
+
+
+</body>
+</html>

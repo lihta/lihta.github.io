@@ -1,0 +1,58 @@
+@media screen and (min-width: 768px) {
+    #sidebar {
+        display: inline;
+        float: left;
+        width: 23.333333333333332%;
+        margin: 0 0.833333333333333%;
+        overflow: hidden;
+    }
+}
+.widget-wrap {
+    margin: 50px 0;
+    height: 300px;
+}
+.widget-title{
+    color: #ddd;
+}
+.widget {
+    color: #999;
+    text-shadow: 0 1px #fff;
+    background: #ddd;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 3px;
+}
+
+.widget a {
+    color: #258fb8;
+    text-decoration: none;
+}
+
+.widget a:hover {
+    text-decoration: underline;
+}
+
+.widget ul{
+    padding-left: 20px;
+}
+
+.widget li{
+    margin-bottom: 10px;
+    height: 40px;
+    line-height: 20px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+ul li{
+    list-style: none;
+
+}
+
+
+
+
+
+

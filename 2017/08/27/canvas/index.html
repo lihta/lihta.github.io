@@ -2,227 +2,132 @@
 <html>
 <head>
     <meta charset="utf-8">
-
-    <title>20170827 | canvas</title>
+    <title>利用canvas吸取图片主色、次色，使用HTML5 canvas 的 getImageData 获取图片像素信息</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+    <meta name="description" content="利用canvas吸取图片主色、次色，使用HTML5 canvas 的 getImageData 获取图片像素信息">
     <meta property="og:type" content="article">
     <meta property="og:title" content="201726">
-    <meta property="og:url" content="http://yoursite.com/2017/02/26/hello-world/index.html">
-    <meta property="og:site_name" content="Hexo">
-    <meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+    <meta property="og:url" content="http://yoursite.com/index.html">
+    <meta property="og:site_name" content="利用canvas吸取图片主色、次色，使用HTML5 canvas 的 getImageData 获取图片像素信息">
+    <meta property="og:description" content="利用canvas吸取图片主色、次色，使用HTML5 canvas 的 getImageData 获取图片像素信息">
     <meta property="og:updated_time" content="2017-02-26T09:55:47.613Z">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="201726">
-    <meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-
-
-    <link rel="icon" href="/favicon.png">
-
-
+    <meta name="twitter:description" content="利用canvas吸取图片主色、次色，使用HTML5 canvas 的 getImageData 获取图片像素信息">
+    <link rel="alternate" href="../../../../atom.xml" title="使用HTML5 canvas 获取图片颜色" type="application/atom+xml">
+    <link rel="icon" href="../../../../favicon.ico">
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-
-    <link rel="stylesheet" href="/css/style.css">
-
-
+    <link rel="stylesheet" href="../../../../css/style.css">
+    <style>
+        p{
+            padding:5px 0;
+            line-height: 22px;
+        }
+        .string{
+            color:#0df3f3;
+        }
+    </style>
 </head>
-
 <body>
+
 <div id="container">
     <div id="wrap">
-        <header id="header">
-            <div id="banner"></div>
-            <div id="header-outer" class="outer">
-                <div id="header-title" class="inner">
-                    <h1 id="logo-wrap">
-                        <a href="/" id="logo">不知道这是什么鬼</a>
-                    </h1>
 
-                </div>
-                <div id="header-inner" class="inner">
-                    <nav id="main-nav">
-                        <a id="main-nav-toggle" class="nav-icon"></a>
-                        <a class="main-nav-link" href="/">Home</a>
-                        <a class="main-nav-link" href="/archives">Archives</a>
-                    </nav>
-                    <nav id="sub-nav">
-                        <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-                        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
-                    </nav>
-                    <div id="search-form-wrap">
-                        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
-                            <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
-                            <button type="submit" class="search-form-submit">&#xF002;</button>
-                            <input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <iframe src="../../../../common/html/header.html" width=100% height=300 marginwidth=0 marginheight=0
+                scrolling="no"></iframe>
+
         <div class="outer">
             <section id="main">
                 <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+
                     <div class="article-meta">
                         <a href="/2017/02/26/hello-world/" class="article-date">
-                            <time datetime="2017-02-26T09:45:51.176Z" itemprop="datePublished">标题么？？</time>
+                            <time datetime="2017-02-26T09:45:51.176Z" itemprop="datePublished">2017-02-26</time>
                         </a>
-
                     </div>
                     <div class="article-inner">
                         <header class="article-header">
-                            <h1 class="article-title" itemprop="name">
-                               正文的主题
-                            </h1>
+                            <h2 itemprop="name" style="text-align: center">
+                                <a class="article-title" style="color:#fff">利用canvas吸取图片主色、次色等图片信息</a>
+                            </h2>
                         </header>
-                        <div class="article-entry" itemprop="articleBody">
-                            <p>正文正文正文正文正文正文正文正文正文……</p>
-                            <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>标题1</h2>
-                            <h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink"
-                                                          title="Create a new post"></a>标题2</h3>
-                            <figure class="highlight bash">
-                                <table>
-                                    <tr>
-                                        <td class="gutter">
-                                            <pre><div class="line">1</div></pre>
-                                        </td>
-                                        <td class="code">
-                                            <pre><div class="line">$ hexo new <span class="string">"My New Post"</span>
-                                            </div></pre>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </figure>
-                            <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a>
-                            </p>
-                            <h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run
-                                server</h3>
-                            <figure class="highlight bash">
-                                <table>
-                                    <tr>
-                                        <td class="gutter">
-                                            <pre><div class="line">1</div></pre>
-                                        </td>
-                                        <td class="code">
-                                            <pre><div class="line">$ hexo server</div></pre>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </figure>
-                            <p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a>
-                            </p>
-                            <h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink"
-                                                              title="Generate static files"></a>Generate static files
-                            </h3>
-                            <figure class="highlight bash">
-                                <table>
-                                    <tr>
-                                        <td class="gutter">
-                                            <pre><div class="line">1</div></pre>
-                                        </td>
-                                        <td class="code">
-                                            <pre><div class="line">$ hexo generate</div></pre>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </figure>
-                            <p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a>
-                            </p>
-                            <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink"
-                                                               title="Deploy to remote sites"></a>Deploy to remote sites
-                            </h3>
-                            <figure class="highlight bash">
-                                <table>
-                                    <tr>
-                                        <td class="gutter">
-                                            <pre><div class="line">1</div></pre>
-                                        </td>
-                                        <td class="code">
-                                            <pre><div class="line">$ hexo deploy</div></pre>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </figure>
-                            <p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a>
-                            </p>
-
-
-                        </div>
+                        <h3 id="Create-a-new-post" style="margin: 10px 20px;font-size: 20px">首先举个栗子，简单粗暴又易懂</h3>
+                        <p>相信你肯定见过这样的banner(如下面图1)：</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/mogujie1.png" alt="" width=50%>
+                        </figure>
+                        <p>将窗口内容整体缩放你会看到(如下面图2)：</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/mogujie2.png" alt=""  width=50%>
+                        </figure>
+                        <p style="margin: 5px 20px">可以看出，两边的背景色可以无限宽，这是怎么回事呢。答案正如你所料，查看元素，会发现中间部分是一张图片，其余是一个宽度100%的背景色，且背景色可以随着banner颜色不同而变化。</p>
+                        <p>废话不多说，引出本文的主题——利用canvas吸取图片主色，再将取色配给背景。</p>
+                        <h3 style="margin: 10px 20px;font-size: 20px">来段代码吧</h3>
+                        <div class="line" style="margin: 5px 20px">原谅我的懒惰，直接贴图……</div>
+                        <div class="string" style="margin: 5px 20px">html代码</div>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code1.png" alt="" width="100%">
+                        </figure>
+                        <div class="string" style="margin: 5px 20px">js代码</div>
+                        <p style="margin: 5px 20px">下面这段代码就是获取图片的颜色，大概思路就是通过canvas获取一组数据imageData,imageDatad的格式是类似[103, 101, 103, 255, 103, 101,
+                            103, 255...]的一个Uint8ClampedArray，分别对应rgba模型的四个色值。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code2.png" alt="">
+                        </figure>
+                        <p>以下是用到的两个简单处理数据的方法，_getArryWeightValue和_getArryMaxItem，仅供参考</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code3.png" alt="">
+                        </figure>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code4.png" alt="">
+                        </figure>
+                        <p>效果如下图。上图为原图，下图背景色为取到的颜色</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/s.png" alt="">
+                        </figure>
+                        <div class="string" style="margin: 5px 20px">重点来了！以下是本人操作中遇到的问题，相信对同样是菜鸟的小伙伴会有帮助</div>
+                        <p style="margin: 5px 20px">
+                            1、标签img不仅仅是为了让你看看，如果html中没有你需要吸取的色值的标签，你会发现你吸取不到色值。如果不希望图片展示出来，你可以设置宽和高为0，是否能设置display没试过，有兴趣可以试试。</p>
+                        <p style="margin: 5px 20px">
+                            2、某些情况你可能希望吸取图片四边而非一边一定范围内的色值（如上边10px,左边10px...），让背景色看起来不是那么突兀。我尝试过，未遂。原因出在获取到的颜色数据为Uint8ClampedArray，对于不懂的东西，我还是不要误导了,自己度娘吧</p>
+                        <p style="margin: 5px 20px">
+                            3、最尴尬的是，我想采集的图片，是非本地的图片，也许这样说不合适，可以说图片地址是跨域的，会提示报错。可能因为canvas不支持跨域获取图片信息，网上也看到有一些解决办法。但项目中实际应用也就是简单实用，能实现效果为佳，太复杂也就背离了初衷，所以最后采用了其他的方法来实现本文开始的效果。</p>
+                        <p style="margin: 5px 20px">4、本文借鉴了不少网上的帖子，如原作者觉得本文有任何不妥，可与本人联系。</p>
                         <footer class="article-footer">
                             <a data-url="http://yoursite.com/2017/02/26/hello-world/"
                                data-id="cizmhsucz0000xolqez59fp7a" class="article-share-link">Delen</a>
-
-
                         </footer>
                     </div>
-
-
                 </article>
-
             </section>
-
-            <aside id="sidebar">
-
-
-                <div class="widget-wrap">
-                    <h3 class="widget-title">Archieven</h3>
-                    <div class="widget">
-                        <ul class="archive-list">
-                            <li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February
-                                2017</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-
-                <div class="widget-wrap">
-                    <h3 class="widget-title">Recente berichten</h3>
-                    <div class="widget">
-                        <ul>
-
-                            <li>
-                                <a href="/2017/02/26/hello-world/">201726</a>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-
-
-            </aside>
-
+            <iframe src="../../../../common/html/aside.html" width=300 height="1000px" marginwidth=0 marginheight=0
+                    scrolling="no"></iframe>
         </div>
         <footer id="footer">
-
             <div class="outer">
                 <div id="footer-info" class="inner">
-                    &copy; 2017 John Doe<br>
-                    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+                    &copy; 2017 Powered by yuan lai ru ci
                 </div>
             </div>
         </footer>
     </div>
     <nav id="mobile-nav">
-
         <a href="/" class="mobile-nav-link">Home</a>
-
-        <a href="/archives" class="mobile-nav-link">Archives</a>
-
+        <a href="../../../../archives" class="mobile-nav-link">Archives</a>
     </nav>
-
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-    <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-    <script src="/js/script.js"></script>
+    <script src="../../../../lib/js/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+    <script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+    <script src="../../../../js/script.js"></script>
 
 </div>
+
 </body>
 </html>

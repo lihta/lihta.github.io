@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>demo1</title>
+</head>
+<body>
+<div class="qwe"></div>
+<img src="img/ccc.jpg" alt="" id="ssss">
+<canvas width="800" height="800" id="canvas"></canvas>
+<div id="output" style="width:130px; height:80px; position: absolute; left:50%;top: 50%; margin:-25px 0 0 -25px; text-align: center;">这个是获取到的颜色<span></span></div>
+<script>
+    (function(window,document){
+        var document=document || window.document;
+        var img=new Image(100,100);
+        var Wcanvas={
+            /*
+             *@method  drawImage  该方法用于在canvas元素中绘制传入链接的图片
+             *@prams target canvas元素
+             *@prams imgsrc 图片链接
+             */
+            drawImage:function(target,imgsrc){
+                var ctx=target.getContext('2d');
+                img.src='./img/banner.png';
+                ctx.drawImage(img,0,0);
+            },
+            /*
+             *@method  getImageColor 该方法用于获取传入图片链接的这个图片的主要颜色值 返回表示颜色值的字符串,如rgb(red,green,blue)
+             *@prams imgsrc 图片链接
+             *@prams pxnumber 图片的前多少个像素值
+             */
+            getImageColor:function(imgsrc,pxnumber){
+                var arrR=[],arrG=[],arrB=[],j=0,R,G,B,rgb;
+                img.src='./img/cecece.png';
+                var canvas=document.createElement('canvas');
+                var ctx=canvas.getContext('2d');
+                canvas.width=img.width;
+                canvas.height=img.height;
+                ctx.drawImage(img,0,0);
+
+                var imageData=ctx.getImageData(0,0,img.width,img.height).data;
+                console.log(ctx.getImageData(0,0,img.width,img.height))
+                for(var i=0;i<imageData.length;i+=4){
+                    arrR[j]=imageData[i];
+
+                    arrG[j]=imageData[i+1];
+                    arrB[j]=imageData[i+2];
+                    j+=1;
+                    if(j==pxnumber){
+                        break;
+                    }
+                }
+                alert(arrR)
+                R=this._getArryWeightValue(arrR);
+               G=this._getArryWeightValue(arrG);
+                B=this._getArryWeightValue(arrB);
+                rgb='rgb('+R+','+G+','+B+')';
+                return rgb;
+
+            },
+            /*
+             *@method  _getArryWeightValue 该方法用于获取数组中的最高权重值 返回数组的最高权重值
+             *@prams arr 数组
+             */
+            _getArryWeightValue:function(arr){
+                var result={},newArr=[],resultArr=[],k=0;
+                for(var i=0;i<arr.length;i++){
+                    if(!result[arr[i]]){
+                        result[arr[i]]=1;
+                    }else{
+                        newArr.push(arr[i]);//newArr数组中为arr中出现重复的元素，即把arr数组中不重复的元素去除掉
+                    }
+                }
+                for(var i=0;i<newArr.length;i++){
+                    k=0;
+                    for(var j=0;j<newArr.length;j++){
+                        if(newArr[i]===newArr[j]){
+                            k+=1;
+                        }
+                        resultArr[i]=k;//把NewArr中每个值重复出现的次数依次放入resultArr中
+                    }
+                }
+                var item=this._getArryMaxItem(resultArr);//获取resultArr数组中出现重复值最多的那个值的索引值
+                return newArr[item];//返回权重最高的值
+            },
+            /*
+             *@method  _getArryMaxItem 获取数组中最大值所对应的索引值，如arr[3]=100,这个100是arr这个数组当中最大的值，那么获取到索引值3
+             *@prams arr 数组
+             */
+            _getArryMaxItem:function(arr){
+                var max=Math.max.apply(null,arr);
+                for(var i=0;i<arr.length;i++){
+                    if(arr[i]===max){
+                        return i;
+                    }
+                }
+            }
+
+        };
+        window.Wcanvas=Wcanvas;
+    })(window,document);
+    //调用例子
+    var canvas=document.getElementById('canvas');
+    var imgsrc='./img/cecece.png';//这里用了本站的图片链接做了一个例子，要是获取别的域名的图片会报错，因为属于跨域请求，考虑到安全问题getImageData方法会报错。
+    Wcanvas.drawImage(canvas,imgsrc);
+    var output=document.getElementById('output');
+    var color=Wcanvas.getImageColor(imgsrc,5);
+    var span = output.childNodes[1];
+    output.style.backgroundColor=color;
+    span.innerHTML=color;
+
+</script>
+</body>
+</html>
