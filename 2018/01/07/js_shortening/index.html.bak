@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>分享19个JavaScript 有用的简写写法</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="分享19个JavaScript 有用的简写写法">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="20180107">
+    <meta property="og:url" content="http://yoursite.com/index.html">
+    <meta property="og:site_name" content="分享19个JavaScript 有用的简写写法">
+    <meta property="og:description" content="分享19个JavaScript 有用的简写写法">
+    <meta property="og:updated_time" content="2017-02-26T09:55:47.613Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="201726">
+    <meta name="twitter:description" content="分享19个JavaScript 有用的简写写法">
+    <link rel="alternate" href="../../../../atom.xml" title="分享19个JavaScript 有用的简写写法" type="application/atom+xml">
+    <link rel="icon" href="../../../../favicon.ico">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../../../css/style.css">
+    <style>
+        p {
+            padding: 5px 0;
+            line-height: 22px;
+            margin-left: 20px;
+        }
+
+        .string {
+            color: #0df3f3;
+        }
+
+        p.code {
+            background-color: #ddd;
+            color: #666;
+            margin-right: 30px;
+            margin-left: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div id="wrap">
+        <iframe src="../../../../common/html/header.html" width=100% height=300 marginwidth=0 marginheight=0
+                scrolling="no"></iframe>
+        <div class="outer">
+            <section id="main">
+                <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                    <div class="article-meta">
+                        <a href="#" class="article-date">
+                            <time datetime="2017-02-26T09:45:51.176Z" itemprop="datePublished">2018-01-07</time>
+                        </a>
+                    </div>
+                    <div class="article-inner">
+                        <header class="article-header">
+                            <h2 itemprop="name" style="text-align: center">
+                                <a class="article-title" style="color:#fff">分享19个JavaScript 有用的简写写法</a>
+                            </h2>
+                        </header>
+                        <h3 id="Create-a-new-post" style="margin: 10px 20px;font-size: 20px">
+                            每次看其他人的代码，多少都会有所启发，其几天看到一同事的代码，发现同样的东西，他敲出来的代码要简练好多，看起来逼格提升了一个档次。赶紧回来找了找js编码简写，以下是我找到的常用的19个JavaScript
+                            有用的简写写法，分享给大家</h3>
+                        <div class="string" style="margin: 5px 20px">1.三元操作符</div>
+                        <p>普通写法：</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code1.png" alt="" width=70%>
+                        </figure>
+                        <p>简写：</p>
+                        <p class="code"> const answer = x > 10 ? 'is greater' : 'is lesser';</p>
+
+                        <div class="string" style="margin: 5px 20px">2.短路求值简写方式</div>
+                        <p>当给一个变量分配另一个值时，想确定源始值不是null，undefined或空值。可以写撰写一个多重条件的if语句。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code2.png" alt="" width=70%>
+                        </figure>
+                        <p>或者可以使用短路求值方法：</p>
+                        <p class="code"> const variable2 = variable1 || 'new';</p>
+
+                        <div class="string" style="margin: 5px 20px">3.声明变量简写方法</div>
+                        <p class="code"> let x;
+                            let y;
+                            let z = 3;</p>
+
+                        <p>简写方法：</p>
+                        <p class="code"> let x, y, z=3;</p>
+
+
+                        <p style="margin: 5px 20px">本文借鉴了不少网上的帖子，如原作者觉得本文有任何不妥，可与本人联系。</p>
+                        <footer class="article-footer">
+                            <a data-url="http://yoursite.com/2017/02/26/hello-world/"
+                               data-id="cizmhsucz0000xolqez59fp7a" class="article-share-link">Delen</a>
+                        </footer>
+                    </div>
+                </article>
+            </section>
+            <iframe src="../../../../common/html/aside.html" width=300 height="1000px" marginwidth=0 marginheight=0
+                    scrolling="no"></iframe>
+        </div>
+        <footer id="footer">
+            <div class="outer">
+                <div id="footer-info" class="inner">
+                    &copy; 2017 Powered by yuan lai ru ci
+                </div>
+            </div>
+        </footer>
+    </div>
+    <nav id="mobile-nav">
+        <a href="/" class="mobile-nav-link">Home</a>
+        <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+    </nav>
+    <script src="../../../../lib/js/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+    <script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+    <script src="../../../../js/script.js"></script>
+
+</div>
+
+</body>
+</html>

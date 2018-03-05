@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>React组件之间的传值</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="React组件之间的传值">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="20180107">
+    <meta property="og:url" content="http://yoursite.com/index.html">
+    <meta property="og:site_name" content="React组件之间的传值">
+    <meta property="og:description" content="React组件之间的传值;无关系组件之间的交互">
+    <meta property="og:updated_time" content="2017-02-26T09:55:47.613Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="201726">
+    <meta name="twitter:description" content="React组件之间的传值;无关系组件之间的交互">
+    <link rel="alternate" href="../../../../atom.xml" title="React组件之间的传值" type="application/atom+xml">
+    <link rel="icon" href="../../../../favicon.ico">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../../../css/style.css">
+    <style>
+        p {
+            padding: 5px 0;
+            line-height: 22px;
+            margin-left: 20px;
+        }
+
+        .string {
+            color: #0df3f3;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div id="wrap">
+        <iframe src="../../../../common/html/header.html" width=100% height=300 marginwidth=0 marginheight=0
+                scrolling="no"></iframe>
+        <div class="outer">
+            <section id="main">
+                <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                    <div class="article-meta">
+                        <a href="#" class="article-date">
+                            <time datetime="2017-02-26T09:45:51.176Z" itemprop="datePublished">2018-01-07</time>
+                        </a>
+                    </div>
+                    <div class="article-inner">
+                        <header class="article-header">
+                            <h2 itemprop="name" style="text-align: center">
+                                <a class="article-title" style="color:#fff">React组件之间的传值</a>
+                            </h2>
+                        </header>
+                        <h3 id="Create-a-new-post" style="margin: 10px 20px;font-size: 20px">
+                            React组件之间的传值，网上好多，基本都是大同小异。这里就捞干货简单明了过一下</h3>
+                        <p>父组件向子组件传值？传参，props接收</p>
+                        <p>子组件向父组件传值？回调函数</p>
+                        <div class="string" style="margin: 5px 20px">这里重点说一下无关系组件之间的交互</div>
+                        <p>React中没有任何嵌套关系的组件之间如何传值？</p>
+                        <p>方案一：全局广播的方式，即Publish/Subscribe，需要引入PubSubJS库</p>
+                        <p>链接：<a href="https://github.com/mroderick/PubSubJS" target="_blank">https://github.com/mroderick/PubSubJS</a>
+                        </p>
+                        <p>例子：</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code1.png" alt="" width=70%>
+                        </figure>
+                        <p>然后：</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code2.png" alt="" width=70%>
+                        </figure>
+                        <p>注意：组件挂载完成，componentDidMount，再订阅事件，而当组件卸载的时候，需要取消订阅的事件，即componentWillUnmount</p>
+
+                        <p>方案二：通过dispatchEvent事件触发器，注意IE使用fireEvent替代</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code3.png" alt="" width=70%>
+                        </figure>
+                        <p>方案三：通过Signals，与dispatch类似，但是不能使用随机的字符串作为事件触发的引用</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code4.png" alt="" width=70%>
+                        </figure>
+                        <p>参考链接：</p>
+                        <p><a href="http://lib.csdn.net/article/react/10810" target="_blank">http://lib.csdn.net/article/react/10810</a>
+                        </p>
+
+
+                        <p style="margin: 5px 20px">本文借鉴了不少网上的帖子，如原作者觉得本文有任何不妥，可与本人联系。</p>
+                        <footer class="article-footer">
+                            <a data-url="http://yoursite.com/2017/02/26/hello-world/"
+                               data-id="cizmhsucz0000xolqez59fp7a" class="article-share-link">Delen</a>
+                        </footer>
+                    </div>
+                </article>
+            </section>
+            <iframe src="../../../../common/html/aside.html" width=300 height="1000px" marginwidth=0 marginheight=0
+                    scrolling="no"></iframe>
+        </div>
+        <footer id="footer">
+            <div class="outer">
+                <div id="footer-info" class="inner">
+                    &copy; 2017 Powered by yuan lai ru ci
+                </div>
+            </div>
+        </footer>
+    </div>
+    <nav id="mobile-nav">
+        <a href="/" class="mobile-nav-link">Home</a>
+        <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+    </nav>
+    <script src="../../../../lib/js/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+    <script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+    <script src="../../../../js/script.js"></script>
+
+</div>
+
+</body>
+</html>
