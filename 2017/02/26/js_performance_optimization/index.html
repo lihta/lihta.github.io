@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JavaScript性能优化之小知识总结（一）</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="JavaScript性能优化之小知识总结（一）">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="201726">
+    <meta property="og:url" content="http://yoursite.com/index.html">
+    <meta property="og:site_name" content="JavaScript性能优化之小知识总结（一）">
+    <meta property="og:description" content="JavaScript性能优化之小知识总结（一）">
+    <meta property="og:updated_time" content="2017-02-26T09:55:47.613Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="201726">
+    <meta name="twitter:description" content="JavaScript性能优化之小知识总结（一）">
+    <link rel="alternate" href="../../../../atom.xml" title="JavaScript性能优化之小知识总结（一）" type="application/atom+xml">
+    <link rel="icon" href="../../../../favicon.ico">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../../../css/style.css">
+    <style>
+        p {
+            padding: 5px 0;
+            line-height: 22px;
+            margin-left: 20px;
+        }
+
+        .string {
+            color: #0df3f3;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div id="wrap">
+        <iframe src="../../../../common/html/header.html" width=100% height=300 marginwidth=0 marginheight=0  scrolling="no"></iframe>
+        <div class="outer">
+            <section id="main">
+                <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                    <div class="article-meta">
+                        <a href="/2017/02/26/hello-world/" class="article-date">
+                            <time datetime="2017-02-26T09:45:51.176Z" itemprop="datePublished">2017-02-26</time>
+                        </a>
+                    </div>
+                    <div class="article-inner">
+                        <header class="article-header">
+                            <h2 itemprop="name" style="text-align: center">
+                                <a class="article-title" style="color:#fff">JavaScript性能优化之小知识总结（一）</a>
+                            </h2>
+                        </header>
+                        <h3 id="Create-a-new-post" style="margin: 10px 20px;font-size: 20px">JavaScript的性能问题不容小觑，这就需要我们开发人员在编写JavaScript程序时多注意一些细节，本文给大家介绍javascript性能优化之小知识总结，需要的朋友可以参考下</h3>
+                        <p>随着网络的发展，网速和机器速度的提高，越来越多的网站用到了丰富客户端技术。而现在Ajax则是最为流行的一种方式。JavaScript是一种解释型语言，所以能无法达到和C/Java之类的水平，限制了它能在客户端所做的事情，为了能改进他的性能，我想基于我以前给JavaScript做过的很多测试来谈谈自己的经验，希望能帮助大家改进自己的JavaScript脚本性能。</p>
+                        <div class="string" style="margin: 5px 20px">前言</div>
+<p>一直在学习javascript，也有看过《犀利开发Jquery内核详解与实践》，对这本书的评价只有两个字犀利，可能是对javascript理解的还不够透彻异或是自己太笨，更多的是自己不擅于思考懒得思考以至于里面说的一些精髓都没有太深入的理解。</p>
+<p>鉴于想让自己有一个提升，进不了一个更加广阔的天地，总得找一个属于自己的居所好好生存，所以平时会有意无意的去积累一些使用jQuerry的常用知识，特别是对于性能要求这一块，总是会想是不是有更好的方式来实现。</p>
+<p>下面是我总结的一些小技巧，仅供参考。(我先会说一个总标题，然后用一小段话来说明这个意思 再最后用一个demo来简单言明)</p>
+
+                        <div class="string" style="margin: 5px 20px">避免全局查找</div>
+                        <p>在一个函数中会用到全局对象存储为局部变量来减少全局查找，因为访问局部变量的速度要比访问全局变量的速度更快些</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code1.png" alt="" width=70%>
+                        </figure>
+
+
+                        <div class="string" style="margin: 5px 20px">定时器</div>
+                        <p>如果针对的是不断运行的代码，不应该使用setTimeout，而应该是用setInterval，因为setTimeout每一次都会初始化一个定时器，而setInterval只会在开始的时候初始化一个定时器</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code2.png" alt="" width=70%>
+                        </figure>
+
+
+                        <div class="string" style="margin: 5px 20px">字符串连接</div>
+                        <p>如果要连接多个字符串，应该少使用+=，如 :s+= a;s += b;s += c; 应写成: s += a + b + c;</p>
+                        <p>而如果是收集字符串，比如多次对同一个字符串进行+=操作的话，最好使用一个缓存，使用JavaScript数组来收集，最后使用join方法连接起来</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code3.png" alt="" width=70%>
+                        </figure>
+
+
+                        <div class="string" style="margin: 5px 20px">避免with语句</div>
+                        <p>和函数类似 ，with语句会创建自己的作用域，因此会增加其中执行的代码的作用域链的长度，由于额外的作用域链的查找，在with语句中执行的代码肯定会比外面执行的代码要慢，在能不使用with语句的时候尽量不要使用with语句。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code4.png" alt="" width=70%>
+                        </figure>
+
+                        <div class="string" style="margin: 5px 20px">数字转换成字符串</div>
+                        <p>一般最好用”" + 1来将数字转换成字符串，虽然看起来比较丑一点，但事实上这个效率是最高的，性能上来说：</p>
+                        <p>(“” +) > String() > .toString() > new String()</p>
+
+
+                        <div class="string" style="margin: 5px 20px">浮点数转换成整型</div>
+                        <p>很多人喜欢使用parseInt()，其实parseInt()是用于将字符串转换成数字，而不是浮点数和整型之间的转换，我们应该使用Math.floor()或者Math.round()</p>
+                        <div class="string" style="margin: 5px 20px">各种类型转换</div>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code5.png" alt="" width=70%>
+                        </figure>
+                        <p>如果定义了toString()方法来进行类型转换的话，推荐显式调用toString()，因为内部的操作在尝试所有可能性之后，会尝试对象的toString()方法尝试能否转化为String，所以直接调用这个方法效率会更高</p>
+
+                        <div class="string" style="margin: 5px 20px">多个类型声明</div>
+                        <p>  在JavaScript中所有变量都可以使用单个var语句来声明，这样就是组合在一起的语句，以减少整个脚本的执行时间，就如上面代码一样，上面代码格式也挺规范，让人一看就明了。</p>
+                        <div class="string" style="margin: 5px 20px">    插入迭代器</div>
+                        <p>     如var name=values[i]; i++;前面两条语句可以写成var name=values[i++]</p>
+
+
+
+
+                        <div class="string" style="margin: 5px 20px">   使用直接量</div>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code6.png" alt="" width=70%>
+                        </figure>
+
+                        <div class="string" style="margin: 5px 20px">   使用DocumentFragment优化多次append</div>
+                        <p>一旦需要更新DOM,请考虑使用文档碎片来构建DOM结构，然后再将其添加到现存的文档中。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code7.png" alt="" width=70%>
+                        </figure>
+
+                        <div class="string" style="margin: 5px 20px"> 使用一次innerHTML赋值代替构建dom元素</div>
+                        <p>对于大的DOM更改，使用innerHTML要比使用标准的DOM方法创建同样的DOM结构快得多。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code8.png" alt="" width=70%>
+                        </figure>
+
+                        <div class="string" style="margin: 5px 20px"> 通过模板元素clone，替代createElement</div>
+                        <p>很多人喜欢在JavaScript中使用document.write来给页面生成内容。事实上这样的效率较低，如果需要直接插入HTML，可以找一个容器元素，比如指定一个div或者span，并设置他们的innerHTML来将自己的HTML代码插入到页面中。通常我们可能会使用字符串直接写HTML来创建节点，其实这样做，1无法保证代码的有效性2字符串操作效率低，所以应该是用document.createElement()方法，而如果文档中存在现成的样板节点，应该是用cloneNode()方法，因为使用createElement()方法之后，你需要设置多次元素的属性，使用cloneNode()则可以减少属性的设置次数——同样如果需要创建很多元素，应该先准备一个样板节点。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code9.png" alt="" width=70%>
+                        </figure>
+
+
+                        <div class="string" style="margin: 5px 20px"> 使用firstChild和nextSibling代替childNodes遍历dom元素</div>
+
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code10.png" alt="" width=70%>
+                        </figure>
+                        <div class="string" style="margin: 5px 20px"> 删除DOM节点</div>
+                        <p>删除dom节点之前,一定要删除注册在该节点上的事件,不管是用observe方式还是用attachEvent方式注册的事件,否则将会产生无法回收的内存。另外，在removeChild和innerHTML=''二者之间,尽量选择后者. 因为在sIEve(内存泄露监测工具)中监测的结果是用removeChild无法有效地释放dom节点</p>
+                        <div class="string" style="margin: 5px 20px"> 使用事件代理</div>
+                        <p>任何可以冒泡的事件都不仅仅可以在事件目标上进行处理，目标的任何祖先节点上也能处理，使用这个知识就可以将事件处理程序附加到更高的地方负责多个目标的事件处理，同样，对于内容动态增加并且子节点都需要相同的事件处理函数的情况，可以把事件注册提到父节点上，这样就不需要为每个子节点注册事件监听了。另外，现有的js库都采用observe方式来创建事件监听,其实现上隔离了dom对象和事件处理函数之间的循环引用,所以应该尽量采用这种方式来创建事件监听</p>
+
+                        <div class="string" style="margin: 5px 20px"> 重复使用的调用结果，事先保存到局部变量</div>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code11.png" alt="" width=70%>
+                        </figure>
+
+<p>为了避免文章太长，今天就到这里。<a>JavaScript性能优化之小知识总结（二）</a>这里还有更多内容，有兴趣的朋友可以去看看。</p>
+                        <p style="margin: 5px 20px">本文借鉴了不少网上的帖子，如原作者觉得本文有任何不妥，可与本人联系。</p>
+
+
+
+
+
+
+                        <footer class="article-footer">
+                            <a data-url="http://yoursite.com/2017/02/26/hello-world/"
+                               data-id="cizmhsucz0000xolqez59fp7a" class="article-share-link">Delen</a>
+                        </footer>
+                    </div>
+                </article>
+            </section>
+            <iframe src="../../../../common/html/aside.html" width=300 height="1000px" marginwidth=0 marginheight=0
+                    scrolling="no"></iframe>
+        </div>
+        <footer id="footer">
+            <div class="outer">
+                <div id="footer-info" class="inner">
+                    &copy; 2017 Powered by yuan lai ru ci
+                </div>
+            </div>
+        </footer>
+    </div>
+    <nav id="mobile-nav">
+        <a href="/" class="mobile-nav-link">Home</a>
+        <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+    </nav>
+    <script src="../../../../lib/js/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+    <script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+    <script src="../../../../js/script.js"></script>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JavaScript性能优化之小知识总结（二）</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="JavaScript性能优化之小知识总结（二）">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="201726">
+    <meta property="og:url" content="http://yoursite.com/index.html">
+    <meta property="og:site_name" content="JavaScript性能优化之小知识总结（二）">
+    <meta property="og:description" content="JavaScript性能优化之小知识总结（二）">
+    <meta property="og:updated_time" content="2017-02-26T09:55:47.613Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="201726">
+    <meta name="twitter:description" content="JavaScript性能优化之小知识总结（二）">
+    <link rel="alternate" href="../../../../atom.xml" title="JavaScript性能优化之小知识总结（二）" type="application/atom+xml">
+    <link rel="icon" href="../../../../favicon.ico">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../../../css/style.css">
+    <style>
+        p {
+            padding: 5px 0;
+            line-height: 22px;
+            margin-left: 20px;
+        }
+
+        .string {
+            color: #0df3f3;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div id="wrap">
+        <iframe src="../../../../common/html/header.html" width=100% height=300 marginwidth=0 marginheight=0  scrolling="no"></iframe>
+        <div class="outer">
+            <section id="main">
+                <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                    <div class="article-meta">
+                        <a href="/2017/02/26/hello-world/" class="article-date">
+                            <time datetime="2017-02-26T09:45:51.176Z" itemprop="datePublished">2017-02-27</time>
+                        </a>
+                    </div>
+                    <div class="article-inner">
+                        <header class="article-header">
+                            <h2 itemprop="name" style="text-align: center">
+                                <a class="article-title" style="color:#fff">JavaScript性能优化之小知识总结（二）</a>
+                            </h2>
+                        </header>
+                        <h3 id="Create-a-new-post" style="margin: 10px 20px;font-size: 20px">接着<a>JavaScript性能优化之小知识总结（一）</a>继续，需要的朋友可以参考下</h3>
+
+                        <div class="string" style="margin: 5px 20px">优化循环</div>
+                        <p>可以使用下面几种方式来优化循环</p>
+                        <div class="string" style="margin: 5px 20px">减值迭代</div>
+                        <p>大多数循环使用一个从0开始、增加到某个特定值的迭代器，在很多情况下，从最大值开始，在循环中不断减值的迭代器更加高效</p>
+                        <div class="string" style="margin: 5px 20px">简化终止条件</div>
+                        <p>由于每次循环过程都会计算终止条件，所以必须保证它尽可能快，也就是说避免属性查找或者其它的操作，最好是将循环控制量保存到局部变量中，也就是说对数组或列表对象的遍历时，提前将length保存到局部变量中，避免在循环的每一步重复取值。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code1.png" alt="" width=70%>
+                        </figure>
+                        <div class="string" style="margin: 5px 20px">简化循环体</div>
+
+                        <p>循环体是执行最多的，所以要确保其被最大限度的优化。</p>     <div class="string" style="margin: 5px 20px">使用后测试循环</div>
+                        <p>在JavaScript中，我们可以使用for(;;),while(),for(in)三种循环，事实上，这三种循环中for(in)的效率极差，因为他需要查询散列键，只要可以，就应该尽量少用。for(;;)和while循环，while循环的效率要优于for(;;)，可能是因为for(;;)结构的问题，需要经常跳转回去。。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code2.png" alt="" width=70%>
+                        </figure>
+<p>最常用的for循环和while循环都是前测试循环，而如do-while这种后测试循环，可以避免最初终止条件的计算，因此运行更快。</p>
+                        <div class="string" style="margin: 5px 20px">展开循环</div>
+<p>当循环次数是确定的，消除循环并使用多次函数调用往往会更快。</p>
+
+                        <div class="string" style="margin: 5px 20px">避免双重解释</div>
+                        <p>如果要提高代码性能，尽可能避免出现需要按照JavaScript解释的字符串，也就是</p>
+
+                        <div class="string" style="margin: 5px 20px">尽量少使用eval函数</div>
+                        <p>使用eval相当于在运行时再次调用解释引擎对内容进行运行，需要消耗大量时间，而且使用Eval带来的安全性问题也是不容忽视的。</p>
+
+                        <div class="string" style="margin: 5px 20px">不要使用Function构造器</div>
+                        <p>不要给setTimeout或者setInterval传递字符串参数</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code3.png" alt="" width=70%>
+                        </figure>
+
+
+                        <div class="string" style="margin: 5px 20px">缩短否定检测</div>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code4.png" alt="" width=70%>
+                        </figure>
+
+                        <div class="string" style="margin: 5px 20px">条件分支</div>
+                        <p>将条件分支，按可能性顺序从高到低排列：可以减少解释器对条件的探测次数</p>
+                        <p>在同一条件子的多（>2）条件分支时，使用switch优于if：switch分支选择的效率高于if，在IE下尤为明显。</p>
+                        <p>4分支的测试，IE下switch的执行时间约为if的一半。</p>
+                        <p>使用三目运算符替代条件分支</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code5.png" alt="" width=70%>
+                        </figure>
+
+                        <div class="string" style="margin: 5px 20px">使用常量</div>
+                        <p>重复值:任何在多处用到的值都应该抽取为一个常量</p>
+                        <p>用户界面字符串:任何用于显示给用户的字符串，都应该抽取出来以方便国际化</p>
+                        <p>URLs:在Web应用中，资源位置很容易变更，所以推荐用一个公共地方存放所有的URL</p>
+                        <p>任意可能会更改的值:每当你用到字面量值的时候，你都要问一下自己这个值在未来是不是会变化，如果答案是“是”，那么这个值就应该被提取出来作为一个常量。</p>
+                        <p>避免与null进行比较</p>
+                        <p>由于JavaScript是弱类型的，所以它不会做任何的自动类型检查，所以如果看到与null进行比较的代码，尝试使用以下技术替换</p>
+                        <p>如果值应为一个引用类型，使用instanceof操作符检查其构造函数</p>
+                        <p>如果值应为一个基本类型，作用typeof检查其类型</p>
+                        <p>如果是希望对象包含某个特定的方法名，则使用typeof操作符确保指定名字的方法存在于对象上</p>
+
+                        <div class="string" style="margin: 5px 20px">避免全局量</div>
+                        <p>全局变量应该全部字母大写，各单词之间用_下划线来连接。尽可能避免全局变量和函数, 尽量减少全局变量的使用，因为在一个页面中包含的所有JavaScript都在同一个域中运行。所以如果你的代码中声明了全局变量或者全局函数的话，后面的代码中载入的脚本文件中的同名变量和函数会覆盖掉（overwrite）你的。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code6.png" alt="" width=90%>
+                        </figure>
+                        <div class="string" style="margin: 5px 20px">尊重对象的所有权</div>
+                        <p>因为JavaScript可以在任何时候修改任意对象，这样就可以以不可预计的方式覆写默认的行为，所以如果你不负责维护某个对象，它的对象或者它的方法，那么你就不要对它进行修改，具体一点就是说：</p>
+                        <p>不要为实例或原型添加属性</p>
+                        <p>不要为实例或者原型添加方法</p>
+                        <p>不要重定义已经存在的方法</p>
+                        <p>不要重复定义其它团队成员已经实现的方法，永远不要修改不是由你所有的对象，你可以通过以下方式为对象创建新的功能:</p>
+                        <p>创建包含所需功能的新对象，并用它与相关对象进行交互</p>
+                        <p>创建自定义类型，继承需要进行修改的类型，然后可以为自定义类型添加额外功能</p>
+
+                        <div class="string" style="margin: 5px 20px">循环引用</div>
+                        <p>如果循环引用中包含DOM对象或者ActiveX对象，那么就会发生内存泄露。内存泄露的后果是在浏览器关闭前，即使是刷新页面，这部分内存不会被浏览器释放。</p>
+
+                        <div class="string" style="margin: 5px 20px">简单的循环引用：</div>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code7.png" alt="" width=50%>
+                        </figure>
+                        <p>但是通常不会出现这种情况。通常循环引用发生在为dom元素添加闭包作为expendo的时候。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code8.png" alt="" width=50%>
+                        </figure>
+                        <p>init在执行的时候，当前上下文我们叫做context。这个时候，context引用了el，el引用了function，function引用了context。这时候形成了一个循环引用。</p>
+
+
+                        <div class="string" style="margin: 5px 20px">  下面2种方法可以解决循环引用：</div>
+                        <p>1)  置空dom对象</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code9.png" alt="" width=50%>
+                        </figure>
+                        <p>将el置空，context中不包含对dom对象的引用，从而打断循环应用。</p>
+                        <p>如果我们需要将dom对象返回，可以用如下方法：</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code10.png" alt="" width=50%>
+                        </figure>
+                        <p> 2)  构造新的context</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code11.png" alt="" width=50%>
+                        </figure>
+                        <p> 把function抽到新的context中，这样，function的context就不包含对el的引用，从而打断循环引用。</p>
+                        <p> 通过javascript创建的dom对象，必须append到页面中</p>
+                        <p> IE下，脚本创建的dom对象，如果没有append到页面中，刷新页面，这部分内存是不会回收的！</p>
+
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/code12.png" alt="" width=50%>
+                        </figure>
+
+                        <p style="margin: 5px 20px">本文借鉴了不少网上的帖子，如原作者觉得本文有任何不妥，可与本人联系。</p>
+                        <footer class="article-footer">
+                            <a data-url="http://yoursite.com/2017/02/26/hello-world/"
+                               data-id="cizmhsucz0000xolqez59fp7a" class="article-share-link">Delen</a>
+                        </footer>
+                    </div>
+                </article>
+            </section>
+            <iframe src="../../../../common/html/aside.html" width=300 height="1000px" marginwidth=0 marginheight=0
+                    scrolling="no"></iframe>
+        </div>
+        <footer id="footer">
+            <div class="outer">
+                <div id="footer-info" class="inner">
+                    &copy; 2017 Powered by yuan lai ru ci
+                </div>
+            </div>
+        </footer>
+    </div>
+    <nav id="mobile-nav">
+        <a href="/" class="mobile-nav-link">Home</a>
+        <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+    </nav>
+    <script src="../../../../lib/js/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+    <script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+    <script src="../../../../js/script.js"></script>
+
+</div>
+
+</body>
+</html>
