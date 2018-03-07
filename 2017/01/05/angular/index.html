@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Angular 1 的一些坑</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Angular 1 的一些坑">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="20170105">
+    <meta property="og:url" content="http://yoursite.com/index.html">
+    <meta property="og:site_name" content="Angular 1 的一些坑">
+    <meta property="og:description" content="Angular 1 的一些坑">
+    <meta property="og:updated_time" content="2017-01-05T09:55:47.613Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="201715">
+    <meta name="twitter:description" content="Angular 1 的一些坑">
+    <link rel="alternate" href="../../../../atom.xml" title="Angular 1 的一些坑" type="application/atom+xml">
+    <link rel="icon" href="../../../../favicon.ico">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../../../css/style.css">
+    <style>
+        p {
+            padding: 5px 0;
+            line-height: 22px;
+            margin-left: 20px;
+        }
+
+        .string {
+            color: #0df3f3;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div id="wrap">
+        <iframe src="../../../../common/html/header.html" width=100% height=300 marginwidth=0 marginheight=0  scrolling="no"></iframe>
+        <div class="outer">
+            <section id="main">
+                <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                    <div class="article-meta">
+                        <a href="#" class="article-date">
+                            <time datetime="2017-02-26T09:45:51.176Z" itemprop="datePublished">2017-01-05</time>
+                        </a>
+                    </div>
+                    <div class="article-inner">
+                        <header class="article-header">
+                            <h2 itemprop="name" style="text-align: center">
+                                <a class="article-title" style="color:#fff">Angular 1 的一些坑</a>
+                            </h2>
+                        </header>
+                        <h3 id="Create-a-new-post" style="margin: 10px 20px;font-size: 20px">在用angular时，遇到一些坑，在此做一些记录</h3>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%;text-align:center">
+                            <img src="./img/1.png" alt="" style="width: 60%">
+                        </figure>
+                        <p>1.模块化加载机制，angular默认是需要加载所有的js的，所以会导致首页加载的js非常多，哪怕压缩后，也不容忽视</p>
+                        <p>2.ng-show和ng-if的区别，从视觉效果出发，两者都是隐藏dom，但是ng-show的dom还会存在，而ng-if则直接不会生成dom，所以尽可能选用ng-if</p>
+                        <p>3.使用ng-repeat时，需要加track by xxx，避免angular给每个item默认生成一个hashCode</p>
+                        <p>4.angular ui-router在url越来越多时，表现会越来越慢，在手机等浏览器会更为明显</p>
+
+                        <p>5.封装angular时，封装时要记得保留angular的模板特性，切忌！！！不可按照jQury插件的方式去封装</p>
+                        <p>6.angular在绑定过多的watch时，会出现一些性能问题，如果可能，那么考虑去掉一些没必要的双向绑定，修改为{{:xxx}}单向绑定的语法</p>
+                        <p>7.angular无法检查双向绑定的结束时间点，配合第三方的工具时，会潜在的导致功能实现的问题。比如jQuery插件，因为需要依赖dom，所以需要使用timeout的方式来处理</p>
+                        <p>8.angular.module('xxx')与angular.module('xxx', [])的意义不相同，angular.module('xxx', [])定义一个模块，angular.module('xxx')获取一个模块</p>
+                        <p>9.目录结构的组织，尽量使用模块化的方式来组织，否则当你项目做的越来越大时，你会深刻体会到其中的痛苦。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%;text-align:center">
+                            <img src="./img/2.png" alt="" style="width: 50%">
+                        </figure>
+
+                        <footer class="article-footer">
+                            <a data-url="http://yoursite.com/2017/02/26/hello-world/"
+                               data-id="cizmhsucz0000xolqez59fp7a" class="article-share-link">Delen</a>
+                        </footer>
+                    </div>
+                </article>
+            </section>
+            <iframe src="../../../../common/html/aside.html" width=300 height="1000px" marginwidth=0 marginheight=0
+                    scrolling="no"></iframe>
+        </div>
+        <footer id="footer">
+            <div class="outer">
+                <div id="footer-info" class="inner">
+                    &copy; 2017 Powered by yuan lai ru ci
+                </div>
+            </div>
+        </footer>
+    </div>
+    <nav id="mobile-nav">
+        <a href="/" class="mobile-nav-link">Home</a>
+        <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+    </nav>
+    <script src="../../../../lib/js/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+    <script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+    <script src="../../../../js/script.js"></script>
+
+</div>
+
+</body>
+</html>

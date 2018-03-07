@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JS 浮点数运算处理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="JS-- 浮点数运算处理">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="20170905">
+    <meta property="og:url" content="http://yoursite.com/index.html">
+    <meta property="og:site_name" content="JS-- 浮点数运算处理">
+    <meta property="og:description" content="JS-- 浮点数运算处理">
+    <meta property="og:updated_time" content="2017-09-05T19:55:47.613Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="201795">
+    <meta name="twitter:description" content="JS-- 浮点数运算处理">
+    <link rel="alternate" href="../../../../atom.xml" title="JS  浮点数运算处理" type="application/atom+xml">
+    <link rel="icon" href="../../../../favicon.ico">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../../../css/style.css">
+    <style>
+        p {
+            padding: 5px 0;
+            line-height: 22px;
+        }
+
+        .string {
+            color: #0df3f3;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div id="wrap">
+
+        <iframe src="../../../../common/html/header.html" width=100% height=300 marginwidth=0 marginheight=0
+                scrolling="no"></iframe>
+
+        <div class="outer">
+            <section id="main">
+                <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+
+                    <div class="article-meta">
+                        <a href="#" class="article-date">
+                            <time datetime="2017-02-26T09:45:51.176Z" itemprop="datePublished">2017-09-05 &nbsp;&nbsp;&nbsp;
+                                作者：猿来如此
+                            </time>
+                        </a>
+                    </div>
+                    <div class="article-inner">
+                        <header class="article-header">
+                            <h2 itemprop="name" style="text-align: center">
+                                <a class="article-title" style="color:#fff">JS 浮点数运算处理</a>
+                            </h2>
+                        </header>
+                        <h3 id="Create-a-new-post" style="margin: 10px 20px;font-size: 20px">
+                            本篇文章主要介绍了JS--浮点数运算处理，现在分享给大家，也给大家做个参考。感兴趣的小伙伴们可以参考一下。</h3>
+                        <div class="string" style="margin: 5px 20px">一. 问题描述：</div>
+                        <p>最近在做一个项目，页面上会存在一些JS浮点数的运算，发现JS浮点数运算存在一些bug.譬如:</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/1.png" alt="" width=70%>
+                        </figure>
+                        <div class="string" style="margin: 5px 20px">二.问题原因　</div>
+                        <p>问题原因其实就是js计算十进制的0.1和0.2都会被转换成二进制，感兴趣的童鞋可以度娘科普一下，在此不多做赘述</p>
+                        <p>当然这个问题并不只是在 Javascript 中才会出现，几乎所有的编程语言都采用了 IEEE-745 浮点数表示法，任何使用二进制浮点数的编程语言都会有这个问题，只不过在很多其他语言中已经封装好了方法来避免精度的问题，而 JavaScript 是一门弱类型的语言，从设计思想上就没有对浮点数有个严格的数据类型，所以精度误差的问题就显得格外突出。</p>
+                        <div class="string" style="margin: 5px 20px">三.解决方案　</div>
+                        <p>JS运算后都会有很小的误差. 不像.Net或者Java那样准确. 主要是JS重点不在运算上面,可是有时候项目一定要用到.我想到的至少有三种解决方案</p>
+                        <div class="string" style="color:#ffe933;margin: 5px 20px">A 方案一:</div>
+                        <p>运算结果保留2-3位小数位数. 前端界面一般用到的运算比较少。精度要求不会太高。 所以取2位小数位即可。</p>
+                        <div class="string" style="color:#ffe933;margin: 5px 20px">B. 方案二:</div>
+                        <p>将小数位数转换为整数运算.　譬如：</p>
+                        <p>0.1+0.2 ----》 0.1*10+0.2*10/10</p>
+                        <p>其实我个人比较推荐这种做法，可以根据各自项目的不同封装成组件，简单实用。当然，需要根据需求去自己写。本人就比较懒，直接用的方案三。</p>
+                        <div class="string" style="color:#ffe933;margin: 5px 20px">C. 方案三:</div>
+                        <p>第三方的库。有好几个比较成熟的第三方库来解决这种问题，为 JavaScript 提供十进制类型的任意精度数值。我在项目中用了decimal.js。</p>
+                        <div style="color:#e1fff5;margin: 5px 20px">     <a href="http://mikemcl.github.io/decimal.js/"> 官网：http://mikemcl.github.io/decimal.js/</a></br>
+                            <a href="https://github.com/MikeMcl/decimal.js">   GitHub：https://github.com/MikeMcl/decimal.js</a></div>
+
+                        <p style="margin: 5px 20px">本文借鉴了不少网上的帖子，如原作者觉得本文有任何不妥，可与本人联系。</p>
+                        <footer class="article-footer">
+                            <a data-url="http://yoursite.com/2017/02/26/hello-world/"
+                               data-id="cizmhsucz0000xolqez59fp7a" class="article-share-link">Delen</a>
+                        </footer>
+                    </div>
+                </article>
+            </section>
+            <iframe src="../../../../common/html/aside.html" width=300 height="1000px" marginwidth=0 marginheight=0
+                    scrolling="no"></iframe>
+        </div>
+        <footer id="footer">
+            <div class="outer">
+                <div id="footer-info" class="inner">
+                    &copy; 2017 Powered by yuan lai ru ci
+                </div>
+            </div>
+        </footer>
+    </div>
+    <nav id="mobile-nav">
+        <a href="/" class="mobile-nav-link">Home</a>
+        <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+    </nav>
+    <script src="../../../../lib/js/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+    <script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+    <script src="../../../../js/script.js"></script>
+
+</div>
+
+</body>
+</html>
