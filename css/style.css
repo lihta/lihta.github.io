@@ -175,7 +175,10 @@ body {
     border: 1px solid #ddd;
     border-radius: 3px;
 }
-
+.article-inner{
+    padding-left:10px;
+    padding-right:10px;
+}
 .article-entry   {
     color: #bbb;
 }

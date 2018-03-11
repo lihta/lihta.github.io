@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ajax提交数据采用post方式参数错误的原因及解决</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="ajax提交数据采用post方式参数错误的原因及解决">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="20170915">
+    <meta property="og:url" content="http://yoursite.com/index.html">
+    <meta property="og:site_name" content="ajax提交数据采用post方式参数错误的原因及解决">
+    <meta property="og:description" content="ajax提交数据采用post方式参数错误的原因及解决">
+    <meta property="og:updated_time" content="2017-09-05T19:55:47.613Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="20170913">
+    <meta name="twitter:description" content="ajax提交数据采用post方式参数错误的原因及解决">
+    <link rel="alternate" href="../../../../atom.xml" title="ajax提交数据采用post方式参数错误的原因及解决" type="application/atom+xml">
+    <link rel="icon" href="../../../../favicon.ico">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../../../css/style.css">
+    <style>
+        p {
+            padding: 5px 0;
+            line-height: 22px;
+        }
+        .string {
+            color: #0df3f3;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div id="wrap">
+
+        <iframe src="../../../../common/html/header.html" width=100% height=300 marginwidth=0 marginheight=0
+                scrolling="no"></iframe>
+        <div class="outer">
+            <section id="main">
+                <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                    <div class="article-meta">
+                        <a href="#" class="article-date">
+                            <time datetime="2017-02-26T09:45:51.176Z" itemprop="datePublished">2017-09-15 &nbsp;&nbsp;&nbsp;
+                                作者：猿来如此
+                            </time>
+                        </a>
+                    </div>
+                    <div class="article-inner">
+                        <header class="article-header">
+                            <h2 itemprop="name" style="text-align: center">
+                                <a class="article-title" style="color:#fff">ajax提交数据采用post方式参数错误的原因及解决</a>
+                            </h2>
+                        </header>
+                        <p>最近在项目中使用ajax的post方式提交数据时，总是参数错误，排查了多种可能性，都没有发现问题的原因。最后问了同事才找到原因。</p>
+                        <p>比如传给后端如下的数据：</p>
+                        <figure class="highlight bash"
+                                                                                                              style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                        <img src="./img/1.png" alt="" width=25% style="margin-right:15px">
+                        <img src="./img/2.png" alt="" width=72%>
+                    </figure>
+
+                        <p> 通过数据可以看出，提交的数据层次非常深，如果在ajax中未进行明确的标识，提交到后端将无法正确的解析（个人看法）</p>
+                        <p> 解决方法也比较简单，ajax增加参数 contentType:application/json</p>
+                        <p> 这种方案，就可以解决上述问题。 </p>
+                        <p> 如果想详细了解contentType相关知识，可以看看另外一篇 <a href="https://lihta.github.io/2017/09/13/ContentType/index.html" style="color:#b7f394">《HttpRequest中常见的四种ContentType》</a>的文章。</p>
+                        <div style="text-align: center;"> <img src="./img/3.png" alt="" width=95% ></div>
+
+                        <footer class="article-footer">
+                            <a data-url="http://yoursite.com/2017/02/26/hello-world/"
+                               data-id="cizmhsucz0000xolqez59fp7a" class="article-share-link">Delen</a>
+                        </footer>
+                    </div>
+                </article>
+            </section>
+            <iframe src="../../../../common/html/aside.html" width=300 height="1000px" marginwidth=0 marginheight=0
+                    scrolling="no"></iframe>
+        </div>
+        <footer id="footer">
+            <div class="outer">
+                <div id="footer-info" class="inner">
+                    &copy; 2017 Powered by yuan lai ru ci
+                </div>
+            </div>
+        </footer>
+    </div>
+    <nav id="mobile-nav">
+        <a href="/" class="mobile-nav-link">Home</a>
+        <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+    </nav>
+    <script src="../../../../lib/js/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+    <script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+    <script src="../../../../js/script.js"></script>
+
+</div>
+
+</body>
+</html>
