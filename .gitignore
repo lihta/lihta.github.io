@@ -1,0 +1,14 @@
+node_modules/
+dev/
+.vscode
+*.zip
+.idea/
+.vs/
+/dist
+dist/
+npm-debug.log
+buid/
+package-lock.json
+package-lock.json
+dist_operator/
+dist_brand/
