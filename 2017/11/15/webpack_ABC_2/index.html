@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>webpack基础知识 webpack入门（下）</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="webpack基础知识 webpack入门（下）">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="201726">
+    <meta property="og:url" content="http://yoursite.com/index.html">
+    <meta property="og:site_name" content="webpack基础知识 webpack入门（下）">
+    <meta property="og:description" content="webpack基础知识 webpack入门（下）">
+    <meta property="og:updated_time" content="2017-02-26T09:55:47.613Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="201726">
+    <meta name="twitter:description" content="webpack基础知识 webpack入门">
+    <link rel="alternate" href="../../../../atom.xml" title="webpack基础知识 webpack入门" type="application/atom+xml">
+    <link rel="icon" href="../../../../favicon.ico">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../../../css/style.css">
+    <style>
+        p {
+            padding: 5px 0;
+            margin-left: 20px;
+        }
+
+        .string {
+            color: #0df3f3;
+        }
+
+        .code_ {
+            margin: 10px 50px;
+            color: #333;
+            border: 1px solid #008abe;
+            background-color: #eeeeee;
+        }
+
+        table {
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+
+        table td, th {
+            border-top: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+            padding: 2px 4px;
+        }
+
+        table th {
+            font-weight: bold;
+            color: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div id="wrap">
+        <iframe src="../../../../common/html/header.html" width=100% height=300 marginwidth=0 marginheight=0
+                scrolling="no"></iframe>
+        <div class="outer">
+            <section id="main">
+                <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                    <div class="article-meta">
+                        <a href="#" class="article-date">
+                            <time datetime="2017-02-26T09:45:51.176Z" itemprop="datePublished">2017-12-20</time>
+                        </a>
+                    </div>
+                    <div class="article-inner">
+                        <header class="article-header">
+                            <h2 itemprop="name" style="text-align: center">
+                                <a class="article-title" style="color:#fff">webpack基础知识 webpack入门（下）</a>
+                            </h2>
+                        </header>
+                        <h3 id="Create-a-new-post" style="margin: 10px 20px;font-size: 20px">
+                            本文从webpack的loaders讲起，错过webpack前面部分的同学可以移步<a href="../webpack_ABC_1/index.html"
+                                                                        style="color:#23caff">《webpack基础知识
+                            webpack入门（上）》</a>
+                        </h3>
+
+                        <div class="string" style="margin: 5px 20px">Loaders</div>
+                        <p>下面鼎鼎大名的Loaders登场了！Loaders在webpack中担任着重要的角色，其功能强大，可拓展性高。</p>
+                        <p>
+                            Loaders是webpack提供的最激动人心的功能之一了。通过使用不同的loader，webpack有能力调用外部的脚本或工具，实现对不同格式的文件的处理，比如说分析转换scss为css，或者把下一代的JS文件（ES6，ES7)转换为现代浏览器兼容的JS文件，对React的开发而言，合适的Loaders可以把React的中用到的JSX文件转换为JS文件。</p>
+                        <p>Loaders需要单独安装并且需要在webpack.config.js中的modules关键字下进行配置，Loaders的配置包括以下几方面：</p>
+                        <p>
+                            <span>* test：一个用以匹配loaders所处理文件的拓展名的正则表达式（必须）</span><br>
+                            <span>* loader：loader的名称（必须）</span><br>
+                            <span>* include/exclude:手动添加必须处理的文件（文件夹）或屏蔽不需要处理的文件（文件夹）（可选）</span><br>
+                            <span>* query：为loaders提供额外的设置选项（可选）</span>
+                        </p>
+                        <p>
+                            不过在配置loader之前，我们把Greeter.js里的问候消息放在一个单独的JSON文件里,并通过合适的配置使Greeter.js可以读取该JSON文件的值，各文件修改后的代码如下：</p>
+                        <p>在app文件夹中创建带有问候信息的JSON文件(命名为config.json)</p>
+                        <p style="color:#aaa;background:#333">{
+                            "greetText": "Hi there and greetings from JSON!"
+                            }</p>
+                        <p>更新后的Greeter.js</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/16.png" alt="" width=60%>
+                        </figure>
+                        <p>注
+                            由于webpack3.*/webpack2.*已经内置可处理JSON文件，这里我们无需再添加webpack1.*需要的json-loader。在看如何具体使用loader之前我们先看看Babel是什么？</p>
+                        <div class="string" style="margin: 5px 20px">Babel</div>
+                        <p>Babel其实是一个编译JavaScript的平台，它可以编译代码帮你达到以下目的：</p>
+                        <p><span>* 让你能使用最新的JavaScript代码（ES6，ES7...），而不用管新标准是否被当前使用的浏览器完全支持；</span><br>
+                            <span>* 让你能使用基于JavaScript进行了拓展的语言，比如React的JSX；</span></p>
+                        <div class="string" style="margin: 5px 20px">Babel的安装与配置</div>
+                        <p>
+                            Babel其实是几个模块化的包，其核心功能位于称为babel-core的npm包中，webpack可以把其不同的包整合在一起使用，对于每一个你需要的功能或拓展，你都需要安装单独的包（用得最多的是解析Es6的babel-env-preset包和解析JSX的babel-preset-react包）。</p>
+                        <p>我们先来一次性安装这些依赖包</p>
+                        <p style="color:#aaa;background:#333">
+                            <span>// npm一次性安装多个依赖模块，模块之间用空格隔开</span><br>
+                            <span>npm install --save-dev babel-core babel-loader babel-preset-env babel-preset-react</span>
+                        </p>
+                        <p>在webpack中配置Babel的方法如下:</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/1.png" alt="" width=60%>
+                        </figure>
+                        <p>现在你的webpack的配置已经允许你使用ES6以及JSX的语法了。继续用上面的例子进行测试，不过这次我们会使用React，记得先安装 React 和 React-DOM</p>
+                        <p style="color:#aaa;background:#333">
+                            npm install --save react react-dom
+                        </p>
+                        <p>接下来我们使用ES6的语法，更新Greeter.js并返回一个React组件</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/2.jpg" alt="" width=60%>
+                        </figure>
+                        <p>修改main.js如下，使用ES6的模块定义和渲染Greeter模块</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/3.png" alt="" width=70%>
+                        </figure>
+                        <p>重新使用npm start打包，如果之前打开的本地服务器没有关闭，你应该可以在localhost:8080下看到与之前一样的内容，这说明react和es6被正常打包了。</p>
+                        <div class="string" style="margin: 5px 20px">Babel的配置</div>
+                        <p>Babel其实可以完全在 webpack.config.js
+                            中进行配置，但是考虑到babel具有非常多的配置选项，在单一的webpack.config.js文件中进行配置往往使得这个文件显得太复杂，因此一些开发者支持把babel的配置选项放在一个单独的名为
+                            ".babelrc"
+                            的配置文件中。我们现在的babel的配置并不算复杂，不过之后我们会再加一些东西，因此现在我们就提取出相关部分，分两个配置文件进行配置（webpack会自动调用.babelrc里的babel配置选项），如下：</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/4.png" alt="" width=60%>
+                        </figure>
+                        <p>.babelrc文件</p>
+                        <p style="color:#aaa;background:#333;">
+                            <span>//.babelrc</span><br>
+                            <span style="margin-left: 30px"> {"presets": ["react", "env"] }</span>
+                        </p>
+                        <p>到目前为止，我们已经知道了，对于模块，Webpack能提供非常强大的处理功能，那那些是模块呢。</p>
+                        <div class="string" style="margin: 5px 20px">一切皆模块</div>
+                        <p>Webpack有一个不可不说的优点，它把所有的文件都都当做模块处理，JavaScript代码，CSS和fonts以及图片等等通过合适的loader都可以被处理。</p>
+                        <div class="string" style="margin: 5px 20px">CSS</div>
+                        <p>webpack提供两个工具处理样式表，css-loader 和 style-loader，二者处理的任务不同，css-loader使你能够使用类似@import 和
+                            url(...)的方法实现
+                            require()的功能,style-loader将所有的计算后的样式加入页面中，二者组合在一起使你能够把样式表嵌入webpack打包后的JS文件中。</p>
+                        <p>继续上面的例子</p>
+                        <p style="color:#aaa;background:#333">
+                            <span>//安装</span><br>
+                            <span style="margin-left: 30px"> npm install --save-dev style-loader css-loader</span>
+                        </p>
+                        <p></p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/5.png" alt="" width=60%>
+                        </figure>
+                        <p>请注意这里对同一个文件引入多个loader的方法。</p>
+                        <p>接下来，在app文件夹里创建一个名字为"main.css"的文件，对一些元素设置样式</p>
+                        <p>我们这里例子中用到的webpack只有单一的入口，其它的模块需要通过 import, require,
+                            url等与入口文件建立其关联，为了让webpack能找到”main.css“文件，我们把它导入”main.js “中</p>
+                        <p style="color:#aaa;background:#333">
+                            <span>import './main.css';//使用require导入css文件</span><br>
+                        </p>
+                        <p>通常情况下，css会和js打包到同一个文件中，并不会打包为一个单独的css文件，不过通过合适的配置webpack也可以把css打包为单独的文件的。</p>
+                        <p>上面的代码说明webpack是怎么把css当做模块看待的，咱们继续看一个更加真实的css模块实践。</p>
+                        <div class="string" style="margin: 5px 20px">CSS module</div>
+                        <p>
+                            在过去的一些年里，JavaScript通过一些新的语言特性，更好的工具以及更好的实践方法（比如说模块化）发展得非常迅速。模块使得开发者把复杂的代码转化为小的，干净的，依赖声明明确的单元，配合优化工具，依赖管理和加载管理可以自动完成。</p>
+                        <p>不过前端的另外一部分，CSS发展就相对慢一些，大多的样式表却依旧巨大且充满了全局类名，维护和修改都非常困难。</p>
+                        <p>被称为CSS
+                            modules的技术意在把JS的模块化思想带入CSS中来，通过CSS模块，所有的类名，动画名默认都只作用于当前模块。Webpack对CSS模块化提供了非常好的支持，只需要在CSS
+                            loader中进行简单配置即可，然后就可以直接把CSS的类名传递到组件的代码中，这样做有效避免了全局污染。具体的代码如下</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/6.png" alt="" width=70%>
+                        </figure>
+                        <p>我们在app文件夹下创建一个Greeter.css文件导入Greeter.js文件来进行一下测试</p>
+                        <p>如果成功，相同的类名也不会造成不同组件之间的污染。 </p>
+                        <p>CSS modules 也是一个很大的主题，有兴趣的话可以去其官方文档了解更多。</p>
+                        <div class="string" style="margin: 5px 20px">CSS预处理器</div>
+                        <p>直接点，安装 —> 使用</p>
+                        <p style="color:#aaa;background:#333">
+                            <span>//安装</span><br>
+                            <span style="margin-left: 30px">npm install less-loader --save-dev</span><br>
+                        </p>
+                        <p>使用</p>
+                        <p>与以上基本一样，不多做赘述了</p>
+                        <p style="color:#aaa;background:#333">
+                            <span>{  loader: "less-loader" }</span>
+                        </p>
+                        <div class="string" style="margin: 5px 20px">插件（Plugins）</div>
+                        <p>插件（Plugins）是用来拓展Webpack功能的，它们会在整个构建过程中生效，执行相关的任务。</p>
+                        <p>
+                            Loaders和Plugins常常被弄混，但是他们其实是完全不同的东西，可以这么来说，loaders是在打包构建过程中用来处理源文件的（JSX，Scss，Less..），一次处理一个，插件并不直接操作单个文件，它直接对整个构建过程其作用。</p>
+                        <p>Webpack有很多内置插件，同时也有很多第三方插件，可以让我们完成更加丰富的功能</p>
+                        <div class="string" style="margin: 5px 20px">使用插件的方法</div>
+                        <p>
+                            要使用某个插件，我们需要通过npm安装它，然后要做的就是在webpack配置中的plugins关键字部分添加该插件的一个实例（plugins是一个数组）继续上面的例子，我们添加了一个给打包后代码添加版权声明的插件。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/7.png" alt="" width=70%>
+                        </figure>
+                        <p>通过这个插件，打包后的JS文件内部开头就显示"版权所有，翻版必究"的字样</p>
+                        <p>这就是webpack插件的基础用法了，下面给大家推荐几个常用的插件</p>
+                        <div class="string" style="margin: 5px 20px">HtmlWebpackPlugin</div>
+                        <p>
+                            这个插件的作用是依据一个简单的index.html模板，生成一个自动引用你打包后的JS文件的新index.html。这在每次生成的js文件名称不同时非常有用（比如添加了hash值）。</p>
+                        <p>首先安装</p>
+                        <p style="color:#aaa;background:#333">
+                            <span>npm install --save-dev html-webpack-plugin</span>
+                        </p>
+                        <p>这个插件自动完成了我们之前手动做的一些事情，在正式使用之前需要对一直以来的项目结构做一些更改：</p>
+
+                        <p>1.移除public文件夹，利用此插件，index.html文件会自动生成，此外CSS已经通过前面的操作打包到JS中了。</p>
+                        <p>2.在app目录下，创建一个index.tmpl.html文件模板，这个模板包含title等必须元素，在编译过程中，插件会依据此模板生成最终的html页面，会自动添加所依赖的 css,
+                            js，favicon等文件，index.tmpl.html中的模板源代码如下：</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/8.png" alt="" width=75%>
+                        </figure>
+                        <p>3.更新webpack的配置文件，方法同上,新建一个build文件夹用来存放最终的输出文件</p><br>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/9.png" alt="" width=65%>
+                        </figure>
+                        <p>再次执行npm start你会发现，build文件夹下面生成了bundle.js和index.html。</p>
+                        <div class="string" style="margin: 5px 20px">Hot Module Replacement</div>
+                        <p>Hot Module Replacement（HMR）也是webpack里很有用的一个插件，它允许你在修改组件代码后，自动刷新实时预览修改后的效果。</p>
+                        <p>在webpack中实现HMR也很简单，只需要做两项配置</p>
+                        <p>1.在webpack配置文件中添加HMR插件；</p>
+                        <p>2.在Webpack Dev Server中添加“hot”参数；</p>
+                        <p>
+                            不过配置完这些后，JS模块其实还是不能自动热加载的，还需要在你的JS模块中执行一个Webpack提供的API才能实现热加载，虽然这个API不难使用，但是如果是React模块，使用我们已经熟悉的Babel可以更方便的实现功能热加载。</p>
+                        <p>整理下我们的思路，具体实现方法如下</p>
+                        <p>
+                            <span>• Babel和webpack是独立的工具</span>
+                            <span>• 二者可以一起工作</span>
+                            <span>• 二者都可以通过插件拓展功能</span>
+                            <span>• HMR是一个webpack插件，它让你能浏览器中实时观察模块修改后的效果，但是如果你想让它工作，需要对模块进行额外的配额；</span>
+                            <span>• Babel有一个叫做react-transform-hrm的插件，可以在不对React模块进行额外的配置的前提下让HMR正常工作；</span>
+                        </p>
+                        <p>还是继续上例来实际看看如何配置</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/10.png" alt="" width=70%>
+                        </figure>
+                        <p>安装react-transform-hmr</p>
+                        <p style="color:#aaa;background:#333">
+                            <span>npm install --save-dev babel-plugin-react-transform react-transform-hmr</span>
+                        </p>
+                        <p>配置Babel</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/10.png" alt="" width=70%>
+                        </figure>
+                        <p>现在当你使用React时，可以热加载模块了,每次保存就能在浏览器上看到更新内容。</p>
+                        <div class="string" style="margin: 5px 20px">产品阶段的构建</div>
+                        <p>目前为止，我们已经使用webpack构建了一个完整的开发环境。但是在产品阶段，可能还需要对打包的文件进行额外的处理，比如说优化，压缩，缓存以及分离CSS和JS。</p>
+                        <p>
+                            对于复杂的项目来说，需要复杂的配置，这时候分解配置文件为多个小的文件可以使得事情井井有条，以上面的例子来说，我们创建一个webpack.production.config.js的文件，在里面加上基本的配置,它和原始的webpack.config.js很像，如下</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/12.png" alt="" width=70%>
+                            <img src="./img/13.png" alt="" width=70%>
+                        </figure>
+                        <p>注意:如果是window电脑，build需要配置为"build": "set NODE_ENV=production && webpack --config
+                            ./webpack.production.config.js --progress"</p>
+                        <div class="string" style="margin: 5px 20px">优化插件</div>
+                        <p>webpack提供了一些在发布阶段非常有用的优化插件，它们大多来自于webpack社区，可以通过npm安装，通过以下插件可以完成产品发布阶段所需的功能</p>
+                        <p>
+                            <span>• OccurenceOrderPlugin :为组件分配ID，通过这个插件webpack可以分析和优先考虑使用最多的模块，并为它们分配最小的ID</span>
+                            <span>• UglifyJsPlugin：压缩JS代码；</span>
+                            <span>• ExtractTextPlugin：分离CSS和JS文件</span>
+                        </p>
+                        <p>我们继续用例子来看看如何添加它们，OccurenceOrder 和 UglifyJS plugins 都是内置插件，你需要做的只是安装其它非内置插件</p>
+                        <p style="color:#aaa;background:#333">
+                            <span>npm install --save-dev extract-text-webpack-plugin</span>
+                        </p>
+                        <p>在配置文件的plugins后引用它们</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/14.jpg" alt="" width=70%>
+                        </figure>
+                        <p>此时执行npm run build可以看见代码是被压缩后的</p>
+                        <div class="string" style="margin: 5px 20px">缓存</div>
+                        <p>缓存无处不在，使用缓存的最好方法是保证你的文件名和文件内容是匹配的（内容改变，名称相应改变）</p>
+                        <p>webpack可以把一个哈希值添加到打包的文件名中，使用方法如下,添加特殊的字符串混合体（[name], [id] and [hash]）到输出文件名前</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/15.png" alt="" width=70%>
+                        </figure>
+                        <p>现在用户会有合理的缓存了。</p>
+                        <div class="string" style="margin: 5px 20px">去除build文件中的残余文件</div>
+                        <p>添加了hash之后，会导致改变文件内容后重新打包时，文件名不同而内容越来越多，因此这里介绍另外一个很好用的插件clean-webpack-plugin。</p>
+                        <p>依旧先安装（cnpm install clean-webpack-plugin --save-dev），安装后按下面的方式来使用。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/17.png" alt="" width=70%>
+                        </figure>
+                        <p>关于clean-webpack-plugin的详细使用可参考 <a
+                                href="https://github.com/johnagan/clean-webpack-plugin">这里</a></p>
+                        <div class="string" style="margin: 5px 20px">总结</div>
+                        <p>其实这是一年前的文章了，趁周末重新运行和修改了一下，现在所有的代码都可以正常运行，所用webpack基于最新的webpack3.5.3。希望依旧能对你有帮助。</p>
+                        <p>
+                            这是一篇好长的文章，谢谢你的耐心，能仔细看到了这里，大概半个月前我第一次自己一步步配置项目所需的Webpack后就一直想写一篇笔记做总结，几次动笔都不能让自己满意，总觉得写不清楚。其实关于Webpack本文讲述得仍不完全，不过相信你看完后已经进入Webpack的大门，能够更好的探索其它的关于Webpack的知识了。</p>
+                        <p>本文搬自<a href="https://segmentfault.com/a/1190000006178770">https://segmentfault.com/a/1190000006178770</a>
+                        </p>
+
+                        <p style="margin: 5px 20px">本文借鉴了不少网上的帖子，如原作者觉得本文有任何不妥，可与本人联系。</p>
+                        <footer class="article-footer">
+                            <a data-url="http://yoursite.com/2017/02/26/hello-world/"
+                               data-id="cizmhsucz0000xolqez59fp7a" class="article-share-link">Delen</a>
+                        </footer>
+                    </div>
+                </article>
+            </section>
+            <iframe src="../../../../common/html/aside.html" width=300 height="1000px" marginwidth=0 marginheight=0
+                    scrolling="no"></iframe>
+        </div>
+        <footer id="footer">
+            <div class="outer">
+                <div id="footer-info" class="inner">
+                    &copy; 2017 Powered by yuan lai ru ci
+                </div>
+            </div>
+        </footer>
+    </div>
+    <nav id="mobile-nav">
+        <a href="/" class="mobile-nav-link">Home</a>
+        <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+    </nav>
+    <script src="../../../../lib/js/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+    <script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+    <script src="../../../../js/script.js"></script>
+
+</div>
+
+</body>
+</html>
