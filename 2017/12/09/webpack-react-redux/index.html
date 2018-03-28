@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>利用webpack搭建React + redux项目</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="利用webpack搭建React + redux项目">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="201726">
+    <meta property="og:url" content="http://yoursite.com/index.html">
+    <meta property="og:site_name" content="利用webpack搭建React + redux项目">
+    <meta property="og:description" content="利用webpack搭建React + redux项目">
+    <meta property="og:updated_time" content="2017-12-09T09:55:47.613Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="20171209">
+    <meta name="twitter:description" content="利用webpack搭建React + redux项目">
+    <link rel="alternate" href="../../../../atom.xml" title="利用webpack搭建React + redux项目" type="application/atom+xml">
+    <link rel="icon" href="../../../../favicon.ico">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../../../css/style.css">
+    <style>
+        p {
+            padding: 5px 0;
+            margin-left: 20px;
+        }
+
+        .string {
+            color: #0df3f3;
+        }
+
+        .code_ {
+            font-size: 20px;
+            margin: 10px 50px;
+            color: #333;
+            border: 1px solid #008abe;
+            background-color: #eeeeee;
+            letter-spacing:3px;
+            line-height: 1.1;
+        }
+
+        a {
+            color: #aeb6f3;
+        }
+
+        .list li {
+            margin-top: 5px;
+            color: #b7c1ed;
+        }
+
+        .list li span {
+            font-size: 20px;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div id="wrap">
+        <iframe src="../../../../common/html/header.html" width=100% height=300 marginwidth=0 marginheight=0
+                scrolling="no"></iframe>
+        <div class="outer">
+            <section id="main">
+                <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                    <div class="article-meta">
+                        <a href="#" class="article-date">
+                            <time datetime="2017-12-09T09:45:51.176Z" itemprop="datePublished">2017-12-09</time>
+                        </a>
+                    </div>
+                    <div class="article-inner">
+                        <header class="article-header">
+                            <h2 itemprop="name" style="text-align: center">
+                                <a class="article-title" style="color:#fff">利用webpack搭建React + redux项目</a>
+                            </h2>
+                        </header>
+                        <h3 id="Create-a-new-post" style="margin: 10px 20px;font-size: 20px">
+                            这里介绍一下利用webpack搭建React + redux项目，例子是按照正常项目简化而来，所以完全可以应用于实际项目中 </h3>
+                        <div class="string" style="margin: 5px 20px">项目整体介绍</div>
+                        <p>webpack就不多说了，可以移步到另一片<a href="../../../11/15/webpack_ABC_1/index.html">《webpack基础知识
+                            webpack入门》有介绍。</a></p>
+                        <p>先来看看项目结构</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/1.jpg" alt="" width=35%>
+                            <img src="./img/2.png" alt="" width=27.5%>
+                        </figure>
+                        <p>上左图为项目整体结构：</p>
+                        <ul style="margin-left: 50px" class="list">
+                            <li><span>☞ </span>app:项目开发的文件都在这里；</li>
+                            <li><span>☞ </span>build：由webpack生成用于生产的文件放在这里；</li>
+                            <li><span>☞ </span> node_modules：这个不用细说了，存储依赖的包文件；</li>
+                            <li><span>☞ </span> .project：忽略该文件，是开发工具文件；</li>
+                            <li><span>☞ </span> package-lock.json： `npm install`时候生成的一份文件，用以记录当前状态下实际安装的各个npm
+                                package的具体来源和版本号，是新版npm增加的一个功能，说白了就是为了保证其他人在npm install时大家的依赖能保证一致。建议上传到git上；
+                            </li>
+                            <li><span>☞ </span> package.json：管理你本地安装的npm包 ；</li>
+                            <li><span>☞ </span> postcss.config.js：配置webpack中loader的一个文件，看名字也知道与css有关，想了解自己找找看；</li>
+                            <li><span>☞ </span> webpack.config.js：webpack的配置文件 ；</li>
+                            <li><span>☞ </span> webpack.production.config.js：webpack的产环境的配置文件，一般看情况自己需要就来一份；</li>
+                        </ul>
+                        <p>上右图为开发文件app目录：</p>
+                        <ul style="margin-left: 50px" class="list">
+                            <li><span>☞ </span>action:如名存放action；</li>
+                            <li><span>☞ </span>component：组件；</li>
+                            <li><span>☞ </span> config：项目一些公用的配置可以放在这里；</li>
+                            <li><span>☞ </span> constant：状态，为什么会有这个文件呢，下面会提到；</li>
+                            <li><span>☞ </span> json： 项目中可能用不到，存放json文件；</li>
+                            <li><span>☞ </span> reducer：如名存放reducer；</li>
+                            <li><span>☞ </span> service：调取接口的文件；</li>
+                            <li><span>☞ </span> style：样式文件；</li>
+                            <li><span>☞ </span> template：模板文件；</li>
+                            <li><span>☞ </span> utils：公用方法；</li>
+                            <li><span>☞ </span> main.js：入口文件；</li>
+                        </ul>
+                        <p>合理的项目结构可以使开发事半功倍，后续维护也轻松。</p>
+                        <p>看到这，不了解react + redux的同学是否依旧蒙圈，那就首先来简单说说他们是如何工作的。</p>
+                        <div class="string" style="margin: 5px 20px">Redux 的设计思想很简单，就两句话。</div>
+                        <p>（1）Web 应用是一个状态机，视图与状态是一一对应的。</p>
+                        <p> （2）所有的状态，保存在一个对象里面。</p>
+                        <div class="string" style="margin: 5px 20px">看图解说更容易理解</div>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/3.png" alt="" width=90%>
+                        </figure>
+                        <div class="code_">用户操作 → 通过action引发state改变 → 但action仅仅是描述了行为的相关信息，真正改变state还得reducer来做，reducer更新state → store是统一的数据存储，维护着所有的state</div>
+                        <p>是不是看这些理论上的东西对redux项目还是不清晰，那么好的，进项目走一遍你会有诸多收货。</p>
+                        <div class="string" style="margin: 5px 20px">首先扔一份package.json，看看都用了什么，自行安装</div>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/4.png" alt="" width=90%>
+                        </figure>
+                        <div class="string" style="margin: 5px 20px">入口文件main.js</div>
+                        <p>
+                            入口文件里定义了store，项目里会涉及异步等等原因吧，基本都会使用中间件，applyMiddleware就是了（不会自补或者就这么用吧）。reducer就是你的整个项目总的reducer，下文讲到reducer时就会知道它是怎么来的了。</p>
+                        <p>项目里往往不会仅有一个模块，路由必不可少，会用到route标签，与之对应Router就必不可少了。</p>
+                        <p>React-Redux 提供Provider组件，可以让容器组件拿到state。</p>
+                        <p>Greeter是容器组件。</p>
+                        <p>这是main.js的内容。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/5.png" alt="" width=90%>
+                        </figure>
+                        <div class="string" style="margin: 5px 20px">项目的主要内容都在content里</div>
+                        <p>看看content都有什么，Greeter是容器组件（导航啊路由啊都在这里了），其他文件夹内是不同的模块，通过路由来跳转。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/6.png" alt="" width=30%>
+                        </figure>
+                        <p>Greeter.js文件</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/7.png" alt="" width=90%>
+                        </figure>
+                        <p>接下来就看看各模块咋回事吧</p>
+                        <p>先来个page1.js</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/8.png" alt="" width=95%>
+                        </figure>
+                        <p>这个页面的功能非常简单，主要是页面的操作，点击按钮改变背景颜色</p>
+                        <p>引用了connect、bindActionCreators、action，这都是关键点。</p>
+                        <p>
+                            两个很关键的方法mapDispatchToProps和mapStateToProps，mapStateToProps拿到新鲜的state（通过reducer更新过的），mapDispatchToProps可以提供action中定义的方法（当然基本都是在触发dispatch）</p>
+                        <p>注意看20行，如何获取mapStateToProps中的值；25行触发mapDispatchToProps中的方法</p>
+                        <p>再来个page2.js</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/9.png" alt="" width=90%>
+                        </figure>
+                        <p>作为前端开发，调取后端接口是必须的，page2就是为了讲解如何调取接口而来，页面中的"text":"hi this is page2"就是通过接口获取的数据。</p>
+                        <p>componentDidMount是生命周期，意思大概就是一进到页面就做的事情，这里是调用page2GetJSON方法。</p>
+                        <p>通过各模块大概知道这个项目的页面大概就如下图的样子</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/10.png" alt="" width=28%>
+                            <img src="./img/11.png" alt="" width=44%>
+                        </figure>
+                        <p>貌似还没看到是如何实现的，下面就来看看关键的action和reducer吧</p>
+                        <div class="string" style="margin: 5px 20px">action</div>
+                        <p>action这里就只定义了一个action.js文件</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/12.png" alt="" width=60%>
+                        </figure>
+                        <p>先看看都引用了啥</p>
+                        <ul style="margin-left: 50px" class="list">
+                            <li><span>☞ </span>collection:这是项目的所有type，提起这个type那就说来话长了，不多说了，给个大白话的思路，不知道的自补吧（我实在是太懒了）。通过action触发dispatch，reducer是如何知道的呢，就是通过传递这个type，不同的type值对应不同的
+                                reducer；
+                            </li>
+                            <li><span>☞ </span>page2GetJSON：获取后端数据，看路径名也知道这是一个调取服务的方法；</li>
+                        </ul>
+                        <p>
+                            action有两个方法，buttonClickAction就是page1里的点击事件了，dispatch传递对应的type值给reducer，page2GetJSON是page2里获取数据的方法。是不是很简单。</p>
+                        <p>
+                            page2GetJSON方法中调取获取数据的方法这块，可是大有文章哦，这里是吧执行结果作为值通过data传给了reducer，实际上如果这个方法有回调，应该把dispatch放在回调里（就像ajax的回调一样）。这样说可能难以理解，也就不多说了。</p>
+                        <div class="string" style="margin: 5px 20px">reducer</div>
+                        <p>一般项目不小，需要管理很多reducer时候，将reducer分为多个子文件。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/13.png" alt="" width=30%>
+                        </figure>
+                        <p>reducer.js文件就是整合page1_reducer.js和page2_reducer.js两个文件的总reducer出口</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/14.png" alt="" width=70%>
+                        </figure>
+                        <p>page1_reducer.js 和 page2_reducer.js中就可以看到reducer是如何改变state了。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/15.png" alt="" width=70%>
+                        </figure>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/16.png" alt="" width=70%>
+                        </figure>
+                        <p>一般都会设置一个默认的state，这里的initialState就是。</p>
+                        <p>多数reducer都是采用switch语句来做action判断。</p>
+                        <p>参数action就是action方法返回的值，好像有点拗口，但愿你可以理解。</p>
+                        <div class="string" style="margin: 5px 20px">整合了整个项目所有type的type_collection.js文件</div>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/17.png" alt="" width=70%>
+                        </figure>
+                        <div class="string" style="margin: 5px 20px">其他文件</div>
+                        <p>service文件夹下的server.js文件，page2GetJSON方法里实际项目里应该可以返回接口的请求，比如ajax。这里就简单的返回一个结果了。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/18.png" alt="" width=50%>
+                        </figure>
+                        <p>
+                            template文件夹下的index.tmpl.html文件，webpack中将其配置为项目唯一出口的模板。可以看到这个模板中的id为root的div元素，可以在main.js看到它。</p>
+                        <figure class="highlight bash"
+                                style="background: #2d2d2d; margin: 0 auto; padding: 15px 20px; overflow: auto; color: #ccc;  line-height: 1;width: 90%">
+                            <img src="./img/19.png" alt="" width=50%>
+                        </figure>
+                        <p>本文写到这里基本就差不多了。</p>
+                        <p>由于没有介绍webpack的配置，也许按照本文内容你也无法运行，很可能就是webpack的原因，源文件已上传至git，可以点击<a
+                                href="https://github.com/lihta/webpack_react_redux.git" target="_blank">这里</a>去下载，相信会对你有所帮助。
+                        </p>
+                        <p>实在没什么基础，从头看过本文还是对redux没啥感觉的同学，在此推荐去看看<a
+                                href="http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_one_basic_usages.html"
+                                target="_blank">阮一峰相关的文章</a>，写的非常不错。另一篇<a
+                                href="https://blog.csdn.net/chenhaifeng2016/article/details/66475364" target="_blank">《最简单的React和Redux整合的例子》</a>，个人觉得也会让redux新手跟蒯的入手。看完这些回头再来看本文你会另有收货。学习是一个不断积累的过程，即使是好文章和教程，一遍很难完全吃透，欢迎再来！
+                        </p>
+
+                        <footer class="article-footer">
+                            <a data-url="http://yoursite.com/2017/02/26/hello-world/"
+                               data-id="cizmhsucz0000xolqez59fp7a" class="article-share-link">Delen</a>
+                        </footer>
+                    </div>
+                </article>
+            </section>
+            <iframe src="../../../../common/html/aside.html" width=300 height="1000px" marginwidth=0 marginheight=0
+                    scrolling="no"></iframe>
+        </div>
+        <footer id="footer">
+            <div class="outer">
+                <div id="footer-info" class="inner">
+                    &copy; 2017 Powered by yuan lai ru ci
+                </div>
+            </div>
+        </footer>
+    </div>
+    <nav id="mobile-nav">
+        <a href="/" class="mobile-nav-link">Home</a>
+        <a href="../../../../archives" class="mobile-nav-link">Archives</a>
+    </nav>
+    <script src="../../../../lib/js/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="../../../../fancybox/jquery.fancybox.css">
+    <script src="../../../../fancybox/jquery.fancybox.pack.js"></script>
+    <script src="../../../../js/script.js"></script>
+
+</div>
+
+</body>
+</html>
